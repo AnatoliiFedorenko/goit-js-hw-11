@@ -34,7 +34,7 @@ export default class ApiService {
   }
 
   get endLibrary() {
-    // возвращает 0 если все загружены и в библиотеке <= елементов, чем per_pag
+    // возвращает 0 если все загружены и в библиотеке <= елементов, чем per_page
     // возвращает 1 если все загружены и в библиотеке больше елементов, чем per_page
     // возвращает 2 если если загружены не все элементы библиотеки
     if (this.totalHits === this.renderCount && this.totalHits <= this.per_page)

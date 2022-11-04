@@ -22,7 +22,7 @@ let simpleLightbox = new SimpleLightbox('.gallery a');
 
 async function handleSubmit(e) {
   const searchImgName = e.currentTarget.searchQuery.value.trim();
-  hiddenButton(refs.button);
+  hideButton(refs.button);
   e.preventDefault();
   imageApiService.resetRenderCount();
   markupGallery.resetMarkup();
@@ -42,18 +42,18 @@ async function handleSubmit(e) {
   markupGallery.makeCardMarkup();
   markupGallery.renderMarkup().then(() => {
     simpleLightbox.refresh();
-    verifyEndLibraryToggleButton(refs.button);
+    verifyLibraryButton(refs.button);
     Notify.info(`Hooray! We found ${imageApiService.totalHits} images.`);
   });
 }
 
 async function handleButton() {
-  hiddenButton(refs.button);
+  hideButton(refs.button);
   markupGallery.imagesArray = await imageApiService.getImg();
   markupGallery.makeCardMarkup();
   markupGallery.renderMarkup().then(() => {
     simpleLightbox.refresh();
-    verifyEndLibraryToggleButton(refs.button);
+    verifyLibraryButton(refs.button);
     const { height: cardHeight } = document
       .querySelector('.gallery')
       .firstElementChild.getBoundingClientRect();
@@ -65,13 +65,13 @@ async function handleButton() {
   });
 }
 
-function verifyEndLibraryToggleButton(reference) {
+function verifyLibraryButton(reference) {
   switch (imageApiService.endLibrary) {
     case 0:
-      hiddenButton(reference);
+      hideButton(reference);
       break;
     case 1:
-      hiddenButton(reference);
+      hideButton(reference);
       Notify.warning(
         "We're sorry, but you've reached the end of search results."
       );
@@ -83,7 +83,7 @@ function verifyEndLibraryToggleButton(reference) {
   return;
 }
 
-function hiddenButton(reference) {
+function hideButton(reference) {
   reference.disabled = true;
   reference.style.display = 'none';
 }
